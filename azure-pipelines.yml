@@ -3,15 +3,15 @@
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
-trigger:
+rigger:
 - master
 
 pool:
   vmImage: 'ubuntu-latest'
 strategy:
   matrix:
-    Python37:
-      python.version: '3.7'
+    Python36:
+      python.version: '3.6'
 
 steps:
 - task: UsePythonVersion@0
@@ -21,9 +21,22 @@ steps:
 
 - script: |
     python -m pip install --upgrade pip
-    pip install -r requirements.txt
   displayName: 'Install dependencies'
 
 - script: |
     pip install pytest pytest-azurepipelines
   displayName: 'pytest'
+
+- script: |
+    python setup.py sdist
+  displayName: 'Artifact creation'
+
+- task: CopyFiles@2
+  inputs:
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dist'
+    publishLocation: 'Container'
