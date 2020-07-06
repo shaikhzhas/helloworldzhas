@@ -1,5 +1,0 @@
-setup.py
-src/helloworldzhas.egg-info/PKG-INFO
-src/helloworldzhas.egg-info/SOURCES.txt
-src/helloworldzhas.egg-info/dependency_links.txt
-src/helloworldzhas.egg-info/top_level.txt
